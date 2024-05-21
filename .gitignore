@@ -48,3 +48,6 @@ Thumbs.db
 
 # Keys
 src/environments
+
+# IDE
+.vscode
