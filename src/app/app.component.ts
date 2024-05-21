@@ -18,10 +18,12 @@ export class AppComponent {
   title = 'angular-daisy-firebase';
   user: any
   constructor(private auth: AuthService) {
+    
   }
   ngOnInit() {
     this.auth.user.subscribe(
-      (user) =>  this.user = user
+   
+      (user) =>  {this.user = user}
 
     )
   }
