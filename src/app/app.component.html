@@ -5,7 +5,7 @@
   <div class="flex-none gap-2">
     <div class="hidden lg:block">
       @if (user) {
-      <p>hello, {{ user.displayName }}</p>
+      <p>hello, {{ user?.data?.displayName }}</p>
       }
 
       @else {
@@ -18,7 +18,7 @@
         <div class="w-10 rounded-full ">
           @if(user) {
 
-          <img alt="Logged in Profile Picture" src="{{ user.photoURL }}" />
+          <img alt="Logged in Profile Picture" src="{{ user?.data?.photoURL  }}" />
           
           }
           @else {
@@ -39,7 +39,7 @@
         <li> <a class="justify-between" [routerLink]="['/settings']">
             Settings
           </a></li>
-        <li> <a class="justify-between" [routerLink]="['/logout']">
+        <li> <a class="justify-between" (click)="logout()">
             Logout
           </a></li>
         }
