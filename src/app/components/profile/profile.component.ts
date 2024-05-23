@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { LoaderComponent } from '../loader/loader.component';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
 import { AuthService } from '../../services/auth.service';
-import { FirestoreService } from '../../services/firestore.service';
+import { FirestoreUser } from '../../models/user';
 
 @Component({
   selector: 'app-profile',
@@ -18,43 +17,56 @@ import { FirestoreService } from '../../services/firestore.service';
 
 export class ProfileComponent {
 
-  user: any
-  load: boolean = false
-  edit: boolean = false
+  user!: FirestoreUser;
+  isLoading: boolean = true;
+  isSubmittingData: boolean = false;
+  isEditing: boolean = false;
   userProfileForm!: FormGroup;
 
-  constructor(private auth: AuthService, private fb: FormBuilder) { }
+  constructor(private auth: AuthService, private fb: FormBuilder) {}
 
   ngOnInit() {
-    this.auth.user.subscribe(
-      (user) => {
 
-        this.user = user
-        this.load = true;
-        this.initializeForm();
-      })
-
+    this.auth.user.subscribe((user) => {
+      this.user = user;
+      this.isLoading = false;
+      this.initializeForm();
+    });
   }
 
-  toggleEdit() {
-    this.edit = !this.edit;
-
+  toggleEditing() {
+    this.isEditing = !this.isEditing;
   }
+
   initializeForm() {
-    this.userProfileForm = this.fb.group(
-      {
-        displayName: [this.user.displayName],
-        email: [this.user.email],
-        photoURL: [this.user.photoURL]
-      }
-    )
+    this.userProfileForm = this.fb.group({
+      displayName: [this.user?.displayName, [Validators.required, Validators.minLength(6)]],
+      photoURL: [this.user?.photoURL],
 
+    });
   }
-  onSubmit() {
+
+  get displayName() { return this.userProfileForm.get('displayName'); }
+
+
+  displayValidationErrors(controlName: string): boolean | null {
+    const control = this.userProfileForm.get(controlName);
+    return control && control.invalid && (control.dirty || control.touched);
+  }
+
+  async onSubmit() {
     if (this.userProfileForm.valid) {
-      // console.log(this.userProfileForm.value);
-      this.auth.updateUserProfile(this.user.id, this.userProfileForm.value)
-    }
+      if (this.user.id) {
+        this.isSubmittingData = true
+        await this.auth.updateUserProfile(this.user.id, this.userProfileForm.value).then(
+          () => this.isSubmittingData = false
+        )
+      }
+
+    } 
   }
+
 
 }
+
+

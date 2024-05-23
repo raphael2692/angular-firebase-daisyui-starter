@@ -129,14 +129,16 @@ export class AuthService {
   async updateUserProfile(userId: string, userData: any) {
     try {
       console.log('Updating user profile data');
+
+
       await this.store.updateDocument('users', userId, userData);
       console.log('User updated successfully');
       const updatedUser = {
         id: userId,
         displayName: userData.displayName,
-        email: userData.email,
+        email: this.user$.getValue().email,
         photoURL: userData.photoURL,
-        createdAt: userData.createdAt,
+        createdAt: this.user$.getValue().createdAt,
       };
       this.user$.next(updatedUser);
       localStorage.setItem('user', JSON.stringify(updatedUser));

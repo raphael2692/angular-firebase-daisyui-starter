@@ -1,8 +1,12 @@
-
 <!-- this component acts as root layout -->
 <app-navigation></app-navigation>
 
 <div class="h-screen rounded-box m-4 p-4">
   <!-- router -->
+  @if (!isLoading) {
   <router-outlet></router-outlet>
+  }
+  @else {
+  }
+
 </div>

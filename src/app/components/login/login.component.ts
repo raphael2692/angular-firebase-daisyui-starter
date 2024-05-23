@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 
 export class LoginComponent {
   user: any
-  load: boolean = false
+  isLoading: boolean = true
 
   constructor(private auth: AuthService, private router: Router) { }
 
@@ -22,7 +22,7 @@ export class LoginComponent {
     this.auth.user.subscribe(
       (user) => {
         if (!user) {
-          this.load = true;
+          this.isLoading = false;
         }
         else {
           this.router.navigate(['/'])
