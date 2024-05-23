@@ -13,19 +13,27 @@ import { Router } from '@angular/router';
 
 
 export class LoginComponent {
+  user: any
+  load: boolean = false
 
   constructor(private auth: AuthService, private router: Router) { }
 
   ngOnInit() {
-
-    this.auth.loginWithGooglePopUp().then(
-      () => this.router.navigate(['/'])
+    this.auth.user.subscribe(
+      (user) => {
+        if (!user) {
+          this.load = true;
+        }
+        else {
+          this.router.navigate(['/'])
+        }
+      }
     )
   }
 
-  // login() {
-  //   this.auth.loginWithGooglePopUp()
-  // }
-
-
+  login() {
+    this.auth.login().then(
+      () => this.router.navigate(['/'])
+    )
+  }
 }

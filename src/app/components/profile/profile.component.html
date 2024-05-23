@@ -3,42 +3,47 @@
 }
 
 @else {
-@if (user) {
+  @if (user) {
 
-
-
-
-<!-- Profile Section -->
-
-<section class="max-w-screen-lg mx-auto p-6  bg-base-200 rounded-lg">
-
-  <div class="flex items-center mb-6">
-
-    <div class="w-24 h-24  rounded-full overflow-hidden">
-
-      <img src="{{ user.data.photoURL }}" alt="Avatar of {{ user.data.displayName }}">
-
+  <!-- Profile Section -->
+  <section class="max-w-screen-lg mx-auto p-6  bg-base-200 rounded-lg">
+    <div class="flex items-center mb-6">
+      <div class="w-24 h-24  rounded-full overflow-hidden">
+        <img src="{{ user?.photoURL }}" alt="Avatar of {{ user.displayName }}">
+      </div>
+      <div class="ml-6">
+        <h2 class="text-2xl font-bold">{{ user.displayName }}</h2>
+        <p class="">{{ user?.email }}</p>
+        <button class="btn  btn-sm mt-2 bg-neutral" (click)="toggleEdit()">Edit profile</button>
+        <p class="mt-6"> Member since: <span class="italic">{{ user?.createdAt | date:'dd/MM/yyyy h:mm:ss a' }}</span>
+        </p>
+      </div>
     </div>
 
-    <div class="ml-6">
+    @if (edit) {
+    <div class="divider"></div>
+    <form [formGroup]="userProfileForm" (ngSubmit)="onSubmit()">
+      <label class="input input-bordered flex items-center gap-2">
+        Name
+        <input type="text" class="grow" formControlName="displayName" />
+      </label>
+      <br>
+      <label class="input input-bordered flex items-center gap-2">
+        Email
+        <input type="email" class="grow" formControlName="email" />
+      </label>
+      <br>
+      <label class="input input-bordered flex items-center gap-2">
+        Avatar URL
+        <input type="text" class="grow" formControlName="photoURL" />
+      </label>
+      <br>
+      <div>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+    }
+  </section>
 
-      <h2 class="text-2xl font-bold">{{ user.data.displayName }}</h2>
-
-      <p class="">{{ user.data.email }}</p>
-
-      <button class="btn  btn-sm mt-2 bg-neutral">Edit profile</button>
-
-      <p class="mt-6"> Member since: <span class="italic">{{ user.data.createdAt | date:'dd/MM/yyyy h:mm:ss a' }}</span></p>
-
-    </div>
-
-  </div>
-
-</section>
-
-
+  }
 }
-
-}
-
-<!-- <app-loader></app-loader> -->
