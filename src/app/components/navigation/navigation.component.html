@@ -1,19 +1,19 @@
 <div class="navbar bg-base-200">
     <div class="flex-1">
       <!-- TEMPLATE -->
-      <a class="btn btn-ghost text-xl" [routerLink]="['/']">&#60;Project&#62;</a>
+      <a class="btn btn-ghost text-xl" [routerLink]="['/']">&#60;ProjectName&#62;</a>
     </div>
     <div class="flex-none gap-2">
-      <div class="hidden lg:block">
+      <!-- <div class="hidden lg:block"> -->
         @if (user) {
         <p>hello, {{ user?.displayName }}</p>
         }
   
         @else {
-        <p>anonymous</p>
+        <p>please, <a  [routerLink]="['/login']" class="link">sign in</a></p>
         }
   
-      </div>
+      <!-- </div> -->
       <div class="dropdown dropdown-end ">
         <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
       
@@ -49,7 +49,7 @@
           @else {
           <li>
             <a class="justify-between" [routerLink]="['/login']">
-              Login
+              Sign in
             </a>
           </li>
           }
