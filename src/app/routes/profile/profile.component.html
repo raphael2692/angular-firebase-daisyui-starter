@@ -17,7 +17,7 @@
 
     @if (isEditing) {
     <div class="divider"></div>
-    <form [formGroup]="userProfileForm" (ngSubmit)="onSubmit($event)">
+    <form [formGroup]="userProfileForm" (ngSubmit)="onSubmit()" (submit)="preventDefault($event)">
       <div>
         <label class="input input-bordered flex items-center gap-2">
           <b>Name</b>

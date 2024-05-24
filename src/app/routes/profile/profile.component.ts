@@ -56,8 +56,8 @@ export class ProfileComponent {
     return control && control.invalid && (control.dirty || control.touched);
   }
 
-  async onSubmit(event:any) {
-    event.preventDefault();
+  async onSubmit() {
+
     if (this.userProfileForm.valid) {
       if (this.user.id) {
         this.isSubmittingData = true
@@ -69,6 +69,10 @@ export class ProfileComponent {
     } 
   }
 
+
+  preventDefault(event: Event): void {
+    event.preventDefault();
+  }
 
 }
 
