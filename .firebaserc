@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "staging": "bluemoon-c8a89",
+    "default": "bluemoon-c8a89"
+  },
+  "targets": {},
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
+}
