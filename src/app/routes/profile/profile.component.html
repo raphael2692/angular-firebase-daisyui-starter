@@ -1,0 +1,56 @@
+@if (user) {
+<app-section>
+  <div class="max-w-lg mx-auto p-6 ">
+    
+    <div class="flex items-center mb-6">
+      <div class="w-24 h-24 rounded-full overflow-hidden hidden sm:block">
+        <img src="{{ user.photoURL }}" alt="Avatar of {{ user.displayName }}">
+      </div>
+      <div class="ml-0 sm:ml-6">
+        <h2 class="text-2xl font-bold">{{ user.displayName }}</h2>
+        <p>{{ user.email }}</p>
+        <button class="btn btn-sm mt-2 bg-neutral" (click)="toggleEditing()">Edit profile</button>
+        <p class="mt-6"> Member since: <span class="italic">{{ user.createdAt | date:'dd/MM/yyyy h:mm:ss a' }}</span>
+        </p>
+      </div>
+    </div>
+
+    @if (isEditing) {
+    <div class="divider"></div>
+    <form [formGroup]="userProfileForm" (ngSubmit)="onSubmit($event)">
+      <div>
+        <label class="input input-bordered flex items-center gap-2">
+          <b>Name</b>
+          <input type="text" class="grow" formControlName="displayName" />
+        </label>
+        @if (displayValidationErrors('displayName')) {
+
+
+        <div class="m-1 text-warning">
+          @if (displayName?.errors?.['required']) {
+          <span>Name is required.</span>
+          }
+          @if (displayName?.errors?.['minlength']){
+          <span>Name is too short.</span>
+          }
+
+        </div>
+        }
+      </div>
+      <br>
+      <label class="input input-bordered flex items-center gap-2 overflow-hidden">
+        <b>Avatar URL</b>
+        <input type="text" class="grow" formControlName="photoURL" />
+      </label>
+      <br>
+      <div>
+        <button type="submit" class="btn btn-primary" [disabled]="userProfileForm.invalid || isSubmittingData" [disabled]="isSubmittingData">
+          Save
+          <span class="loading loading-spinner loading-xs" [ngClass]="{ 'hidden': !isSubmittingData }" ></span>
+        </button>
+      </div>
+    </form>
+    }
+  </div>
+</app-section>
+}

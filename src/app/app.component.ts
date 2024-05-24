@@ -3,7 +3,7 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 import { AuthService } from './services/auth.service';
 
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from './routes/login/login.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { LoaderComponent } from './components/loader/loader.component';
 

@@ -1,0 +1,38 @@
+
+@if(isLoading) {
+    <app-loader></app-loader>
+}
+
+
+@else {
+
+
+    @if (user) {
+
+        <app-section>
+
+            <div class="flex flex-col items-center">
+        
+           
+            <h1 class="text-2xl font-bold m-6">Cards</h1>
+        
+        
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 content-evenly ">
+                
+                    @for(card of cards; track card) {
+                    <app-card title="{{card.title}} ({{ $index }} of {{ cards.length }})" description="{{card.description}}" imgSrc="{{ card.imgSrc }}"
+                        btnLabel="{{ card.btnLabel }} " [btnAction]="card.btnAction">
+                    </app-card>
+            
+                    }
+            
+                </div>
+        
+            
+            </div>
+        </app-section>
+
+    }
+
+
+}

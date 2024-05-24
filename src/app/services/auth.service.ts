@@ -73,7 +73,7 @@ export class AuthService {
           localStorage.setItem('user', JSON.stringify(newUser));
           this.user$.next(newUser);
           console.log('User provisioned')
-          await this.initializeUserData(newUser);
+          await this.initializeUserData(newUser.id);
         }
       }
     } catch (error) {
@@ -81,12 +81,13 @@ export class AuthService {
     }
   }
 
-  async initializeUserData(newUser: FirestoreUser) {
+  async initializeUserData(newUserId: string) {
     try {
-      const userData = await this.store.getDocumentSnapByField('userData', 'userId', newUser.id);
+      const userData = await this.store.getDocumentSnapByField('userData', 'userId', newUserId);
       console.log('Reading existing user data');
       if (!userData) {
-        await this.store.addDocument('userData', { 'userId': newUser.id, 'lastUpdate': Date.now() });
+        const userRef = this.store.getDocumentRef('users', newUserId)
+        await this.store.addDocument('userData', { 'userId': userRef, 'lastUpdate': Date.now() });
       }
     } catch (error) {
       this.handleError(error);

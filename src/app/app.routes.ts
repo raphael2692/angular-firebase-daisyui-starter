@@ -1,8 +1,10 @@
 import { Routes } from '@angular/router';
 
-import { ProfileComponent } from './components/profile/profile.component';
-import { LoginComponent } from './components/login/login.component';
-import { PlaygroundComponent } from './components/playground/playground.component';
+import { LoginComponent } from './routes/login/login.component';
+import { ProfileComponent } from './routes/profile/profile.component';
+import { PlaygroundComponent } from './routes/playground/playground.component';
+
+
 export const routes: Routes = [
     {path: 'login', component: LoginComponent },
     {path: 'profile', component: ProfileComponent},

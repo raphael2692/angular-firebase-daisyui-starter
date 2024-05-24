@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoaderComponent } from '../loader/loader.component';
+import { LoaderComponent } from '../../components/loader/loader.component';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -7,10 +7,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { FirestoreUser } from '../../models/user';
 
+import { SectionComponent } from '../../components/section/section.component';
+
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [LoaderComponent, CommonModule, ReactiveFormsModule],
+  imports: [LoaderComponent, CommonModule, ReactiveFormsModule, SectionComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
@@ -54,7 +56,8 @@ export class ProfileComponent {
     return control && control.invalid && (control.dirty || control.touched);
   }
 
-  async onSubmit() {
+  async onSubmit(event:any) {
+    event.preventDefault();
     if (this.userProfileForm.valid) {
       if (this.user.id) {
         this.isSubmittingData = true
