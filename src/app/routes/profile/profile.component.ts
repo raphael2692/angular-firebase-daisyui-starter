@@ -6,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AuthService } from '../../services/auth.service';
 import { FirestoreUser } from '../../models/user';
-
+import { Router } from '@angular/router';
 import { SectionComponent } from '../../components/section/section.component';
 
 @Component({
@@ -25,7 +25,7 @@ export class ProfileComponent {
   isEditing: boolean = false;
   userProfileForm!: FormGroup;
 
-  constructor(private auth: AuthService, private fb: FormBuilder) {}
+  constructor(private auth: AuthService, private fb: FormBuilder, private router: Router) {}
 
   ngOnInit() {
 
@@ -62,7 +62,9 @@ export class ProfileComponent {
       if (this.user.id) {
         this.isSubmittingData = true
         await this.auth.updateUserProfile(this.user.id, this.userProfileForm.value).then(
-          () => this.isSubmittingData = false
+          () => {this.isSubmittingData = false
+            this.router.navigate(['/profile'])
+          }
         )
       }
 

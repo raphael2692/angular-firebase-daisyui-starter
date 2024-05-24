@@ -51,3 +51,6 @@ src/environments
 
 # IDE
 .vscode
+
+# Firebase
+firebase.json
