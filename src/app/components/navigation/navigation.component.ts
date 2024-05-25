@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { RouterLink, RouterLinkActive, RouterOutlet, NavigationEnd } from '@angular/router';
 import { LoginComponent } from '../../routes/login/login.component';
 import { AuthService } from '../../services/auth.service';
 
@@ -13,15 +13,18 @@ import { AuthService } from '../../services/auth.service';
 })
 export class NavigationComponent implements OnInit {
 
+  @ViewChild('dropdown') dropdown: any;
+
   user: any
+  isOpened: boolean = false
   constructor(private auth: AuthService) { }
 
 
   ngOnInit() {
     this.auth.user.subscribe(
       (user) => { this.user = user }
-
     )
+    
   }
 
   logout() {
@@ -29,4 +32,9 @@ export class NavigationComponent implements OnInit {
       () => console.log('User logged out')
     )
   }
+
+  toggleDropdown(){
+    this.isOpened = !this.isOpened;
+  }
+
 }

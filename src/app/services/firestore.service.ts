@@ -12,7 +12,6 @@ export class FirestoreService {
   private handleError(error: any): void {
     const { code, message } = error;
     console.error('Error:', { code, message });
-    // Optionally, you can throw the error or transform it into a more user-friendly message
   }
 
   getDocumentRef(collectionName: string, documentId: string): DocumentReference {
@@ -24,7 +23,7 @@ export class FirestoreService {
       return await addDoc(collection(this.firestore, collectionName), data);
     } catch (error) {
       this.handleError(error);
-      return null; // Ensure a return value even when catching errors
+      return null; 
     }
   }
 
@@ -51,7 +50,7 @@ export class FirestoreService {
 
     } catch (error) {
       this.handleError(error);
-      return null; // Ensure a return value even when catching errors
+      return null;
     }
   }
 
@@ -67,7 +66,7 @@ export class FirestoreService {
       }
     } catch (error) {
       this.handleError(error);
-      return []; // Ensure a return value even when catching errors
+      return []; 
     }
   }
 
@@ -82,7 +81,7 @@ export class FirestoreService {
       }
     } catch (error) {
       this.handleError(error);
-      return null; // Ensure a return value even when catching errors
+      return null; 
     }
   }
 }
